@@ -16,6 +16,7 @@ import lombok.Setter;
 public class Rectangle extends Shape {
     private double width;
     private double height;
+    private final Type type = Type.RECTANGLE;
 
     @Override
     public double calculateArea() {

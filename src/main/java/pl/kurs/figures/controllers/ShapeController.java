@@ -22,13 +22,8 @@ import java.util.List;
 public class ShapeController {
     private ShapeControllerService shapeControllerService;
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<ShapeDTO> addShape(@RequestBody @Valid CreateShapeCommand command) {
         return ResponseEntity.status(HttpStatus.CREATED).body(shapeControllerService.addShape(command));
-    }
-
-    @GetMapping
-    public  ResponseEntity<List<ShapeDTO>> getShapes() {
-        return ResponseEntity.ok(shapeControllerService.getShapes());
     }
 }

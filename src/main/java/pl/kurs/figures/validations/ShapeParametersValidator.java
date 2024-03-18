@@ -4,7 +4,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import pl.kurs.figures.command.CreateShapeCommand;
 
-public class ShapeParameterValidator implements ConstraintValidator<ValidShapeParameters, CreateShapeCommand> {
+public class ShapeParametersValidator implements ConstraintValidator<ValidShapeParameters, CreateShapeCommand> {
 
     @Override
     public boolean isValid(CreateShapeCommand command, ConstraintValidatorContext constraintValidatorContext) {

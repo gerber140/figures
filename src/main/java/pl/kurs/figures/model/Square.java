@@ -12,7 +12,7 @@ import lombok.*;
 @Setter
 public class Square extends Shape {
     private double width;
-
+    private final Type type = Type.SQUARE;
     @Override
     public double calculateArea() {
         return width * width;

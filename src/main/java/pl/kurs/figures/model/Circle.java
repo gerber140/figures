@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 public class Circle extends Shape {
     private double radius;
-
+    private final Type type = Type.CIRCLE;
     @Override
     public double calculateArea() {
         return Math.PI * radius * radius;

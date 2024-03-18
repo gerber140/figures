@@ -9,8 +9,10 @@ import pl.kurs.figures.dto.CircleDTO;
 import pl.kurs.figures.dto.RectangleDTO;
 import pl.kurs.figures.dto.ShapeDTO;
 import pl.kurs.figures.dto.SquareDTO;
+import pl.kurs.figures.exceptions.InvalidShapeException;
 import pl.kurs.figures.model.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,28 +26,15 @@ public class ShapeControllerService {
         return getShapeDto(shape);
     }
 
-    public List<ShapeDTO> getShapes() {
-        return shapeService.getAll()
-                .stream()
-                .map(this::getShapeDto)
-                .toList();
-    }
-
     private ShapeDTO getShapeDto(Shape shape) {
         if (shape instanceof Circle) {
-            CircleDTO circleDTO = modelMapper.map(shape, CircleDTO.class);
-            circleDTO.setType(Type.CIRCLE);
-            return circleDTO;
+            return modelMapper.map(shape, CircleDTO.class);
         } else if (shape instanceof Square) {
-            SquareDTO squareDTO = modelMapper.map(shape, SquareDTO.class);
-            squareDTO.setType(Type.SQUARE);
-            return squareDTO;
+            return modelMapper.map(shape, SquareDTO.class);
         } else if (shape instanceof Rectangle) {
-            RectangleDTO rectangleDTO = modelMapper.map(shape, RectangleDTO.class);
-            rectangleDTO.setType(Type.RECTANGLE);
-            return rectangleDTO;
+            return modelMapper.map(shape, RectangleDTO.class);
         } else {
-            throw new IllegalArgumentException("Unsupported shape type");
+            throw new InvalidShapeException("Unsupported shape type");
         }
     }
 }

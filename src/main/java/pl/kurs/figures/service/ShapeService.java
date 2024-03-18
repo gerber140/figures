@@ -23,8 +23,4 @@ public class ShapeService {
                 .orElseThrow(() -> new InvalidEntityException("Invalid entity for save"));
         return shapeRepository.save(shape);
     }
-
-    public List<Shape> getAll() {
-        return shapeRepository.findAll();
-    }
 }
