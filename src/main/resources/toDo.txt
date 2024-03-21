@@ -1,6 +1,7 @@
 Stworz Api do dodawania figur geometrycznych do bazy danych.
 obslugujemy nastepujace figury: Kwadrat, Kolo, Prostokat, ale w przyszlosci mozemy wiecej.
 
+
 Request do dodawania figur ma wygladac tak:
 @POST /api/v1/shapes
 body: { type: "NAZWA", parameters: [p1, p2 p3] }

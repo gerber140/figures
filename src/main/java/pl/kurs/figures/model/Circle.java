@@ -1,28 +1,24 @@
 package pl.kurs.figures.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "Circles")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@DiscriminatorValue("CIRCLE")
 public class Circle extends Shape {
     private double radius;
-    private final Type type = Type.CIRCLE;
-    @Override
-    public double calculateArea() {
-        return Math.PI * radius * radius;
-    }
 
-    @Override
-    public double calculatePerimeter() {
-        return 2 * Math.PI * radius;
+    @PrePersist
+    @PreUpdate
+    public void calculateProperties() {
+        this.setArea(Math.PI * radius * radius);
+        this.setPerimeter(2 * Math.PI * radius);
     }
 }

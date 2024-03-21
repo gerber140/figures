@@ -1,4 +1,4 @@
-package pl.kurs.figures.model;
+package pl.kurs.figures.command;
 
 public enum Type {
     SQUARE,

@@ -5,14 +5,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.kurs.figures.ShapeSearchCriteria;
 import pl.kurs.figures.command.CreateShapeCommand;
 import pl.kurs.figures.dto.ShapeDTO;
 import pl.kurs.figures.model.Shape;
-import pl.kurs.figures.model.Square;
 import pl.kurs.figures.service.ShapeControllerService;
-import pl.kurs.figures.service.ShapeFactory;
-import pl.kurs.figures.service.ShapeService;
-import org.modelmapper.ModelMapper;
 
 import java.util.List;
 
@@ -22,8 +19,14 @@ import java.util.List;
 public class ShapeController {
     private ShapeControllerService shapeControllerService;
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<ShapeDTO> addShape(@RequestBody @Valid CreateShapeCommand command) {
         return ResponseEntity.status(HttpStatus.CREATED).body(shapeControllerService.addShape(command));
     }
+
+    @GetMapping
+    public ResponseEntity<List<ShapeDTO>> searchShapes(ShapeSearchCriteria criteria){
+        return ResponseEntity.ok(shapeControllerService.getShapes(criteria));
+    }
+
 }

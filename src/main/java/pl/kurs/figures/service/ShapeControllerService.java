@@ -2,9 +2,10 @@ package pl.kurs.figures.service;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import pl.kurs.figures.ShapeSearchCriteria;
 import pl.kurs.figures.command.CreateShapeCommand;
+import pl.kurs.figures.command.Type;
 import pl.kurs.figures.dto.CircleDTO;
 import pl.kurs.figures.dto.RectangleDTO;
 import pl.kurs.figures.dto.ShapeDTO;
@@ -12,27 +13,41 @@ import pl.kurs.figures.dto.SquareDTO;
 import pl.kurs.figures.exceptions.InvalidShapeException;
 import pl.kurs.figures.model.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
+
+import static pl.kurs.figures.service.ShapeFactory.createShape;
 
 @Service
 @AllArgsConstructor
 public class ShapeControllerService {
     private ShapeService shapeService;
     private ModelMapper modelMapper;
-    public ShapeDTO addShape(CreateShapeCommand command){
-        Shape shape = ShapeFactory.createShape(command);
-        shapeService.addShape(shape);
+
+    public ShapeDTO addShape(CreateShapeCommand command) {
+        Shape shape = shapeService.addShape(createShape(command));
         return getShapeDto(shape);
+    }
+
+    public List<ShapeDTO> getShapes(ShapeSearchCriteria criteria) {
+        List<Shape> shapes = shapeService.getShapes(criteria);
+        return shapes.stream()
+                .map(this::getShapeDto)
+                .toList();
     }
 
     private ShapeDTO getShapeDto(Shape shape) {
         if (shape instanceof Circle) {
-            return modelMapper.map(shape, CircleDTO.class);
+            CircleDTO circleDTO = modelMapper.map(shape, CircleDTO.class);
+            circleDTO.setType(Type.CIRCLE);
+            return circleDTO;
         } else if (shape instanceof Square) {
-            return modelMapper.map(shape, SquareDTO.class);
+            SquareDTO squareDTO = modelMapper.map(shape, SquareDTO.class);
+            squareDTO.setType(Type.SQUARE);
+            return squareDTO;
         } else if (shape instanceof Rectangle) {
-            return modelMapper.map(shape, RectangleDTO.class);
+            RectangleDTO rectangleDTO = modelMapper.map(shape, RectangleDTO.class);
+            rectangleDTO.setType(Type.RECTANGLE);
+            return rectangleDTO;
         } else {
             throw new InvalidShapeException("Unsupported shape type");
         }

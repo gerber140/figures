@@ -1,8 +1,9 @@
 package pl.kurs.figures.dto;
 
 import lombok.Data;
-import pl.kurs.figures.model.Type;
+import pl.kurs.figures.command.Type;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public abstract class ShapeDTO {
@@ -12,7 +13,7 @@ public abstract class ShapeDTO {
     private double perimeter;
     private int version;
     private String createdBy;
-    private LocalDate createdAt;
-    private LocalDate lastModifiedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime lastModifiedAt;
     private String lastModifiedBy;
 }

@@ -1,30 +1,25 @@
 package pl.kurs.figures.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "Rectangles")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@DiscriminatorValue("RECTANGLE")
 public class Rectangle extends Shape {
-    private double width;
-    private double height;
-    private final Type type = Type.RECTANGLE;
+    private double firstSide;
+    private double secondSide;
 
-    @Override
-    public double calculateArea() {
-        return width * height;
-    }
-
-    @Override
-    public double calculatePerimeter() {
-        return 2 * width + 2 * height;
+    @PrePersist
+    @PreUpdate
+    public void calculateProperties() {
+        this.setArea(firstSide * secondSide);
+        this.setPerimeter(2 * firstSide + 2 * secondSide);
     }
 }
