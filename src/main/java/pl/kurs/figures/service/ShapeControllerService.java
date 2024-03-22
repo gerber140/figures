@@ -2,8 +2,7 @@ package pl.kurs.figures.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.kurs.figures.ShapeMapper;
-import pl.kurs.figures.ShapeSearchCriteria;
+import pl.kurs.figures.criteria.ShapeSearchCriteria;
 import pl.kurs.figures.command.CreateShapeCommand;
 import pl.kurs.figures.dto.ShapeDTO;
 import pl.kurs.figures.model.*;
@@ -15,7 +14,7 @@ import static pl.kurs.figures.service.ShapeFactory.createShape;
 @AllArgsConstructor
 public class ShapeControllerService {
     private ShapeService shapeService;
-    private ShapeMapper shapeMapper;
+    private ShapeDTOMapper shapeMapper;
 
     public ShapeDTO addShape(CreateShapeCommand command) {
         Shape shape = shapeService.addShape(createShape(command));

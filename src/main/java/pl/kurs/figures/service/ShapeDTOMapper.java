@@ -1,4 +1,4 @@
-package pl.kurs.figures;
+package pl.kurs.figures.service;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -16,7 +16,7 @@ import pl.kurs.figures.model.Square;
 
 @Component
 @AllArgsConstructor
-public class ShapeMapper {
+public class ShapeDTOMapper {
     private ModelMapper modelMapper;
 
     public ShapeDTO toDto(Shape shape) {

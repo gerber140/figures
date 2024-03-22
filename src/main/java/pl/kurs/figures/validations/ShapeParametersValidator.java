@@ -12,14 +12,15 @@ public class ShapeParametersValidator implements ConstraintValidator<ValidShapeP
             return false;
         }
 
-        switch (command.getType()) {
-            case SQUARE:
-            case CIRCLE:
-                return command.getParameters().size() == 1;
-            case RECTANGLE:
-                return command.getParameters().size() == 2;
-            default:
-                return false;
-        }
+        return switch (command.getType()) {
+            case SQUARE, CIRCLE -> command.getParameters().size() == 1;
+            case RECTANGLE -> {
+                if (command.getParameters().size() != 2) {
+                    yield false;
+                }
+                yield !command.getParameters().get(0).equals(command.getParameters().get(1));
+            }
+            default -> false;
+        };
     }
 }

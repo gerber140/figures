@@ -4,8 +4,6 @@ import pl.kurs.figures.command.CreateShapeCommand;
 import pl.kurs.figures.exceptions.InvalidShapeException;
 import pl.kurs.figures.model.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class ShapeFactory {
     public static Shape createShape(CreateShapeCommand command) {

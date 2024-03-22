@@ -1,13 +1,14 @@
-package pl.kurs.figures;
+package pl.kurs.figures.service;
 
 import com.querydsl.core.BooleanBuilder;
 import org.springframework.stereotype.Component;
+import pl.kurs.figures.criteria.ShapeSearchCriteria;
 import pl.kurs.figures.model.*;
 import java.time.LocalTime;
 
 
 @Component
-public class ShapePredicate {
+public class ShapePredicateBuilder {
 
     public BooleanBuilder getShapes(ShapeSearchCriteria criteria) {
         BooleanBuilder builder = new BooleanBuilder();

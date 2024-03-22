@@ -1,4 +1,4 @@
-package pl.kurs.figures;
+package pl.kurs.figures.criteria;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,23 +2,19 @@ package pl.kurs.figures.service;
 
 import com.querydsl.core.BooleanBuilder;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.kurs.figures.ShapePredicate;
-import pl.kurs.figures.ShapeSearchCriteria;
-import pl.kurs.figures.dto.ShapeDTO;
+import pl.kurs.figures.criteria.ShapeSearchCriteria;
 import pl.kurs.figures.exceptions.InvalidEntityException;
 import pl.kurs.figures.model.*;
 import pl.kurs.figures.repository.ShapeRepository;
 
-import java.time.LocalTime;
 import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class ShapeService {
     private ShapeRepository shapeRepository;
-    private ShapePredicate shapePredicate;
+    private ShapePredicateBuilder shapePredicate;
 
     public Shape addShape(Shape shape) {
         shape = Optional.ofNullable(shape)

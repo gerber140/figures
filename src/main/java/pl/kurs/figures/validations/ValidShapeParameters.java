@@ -11,7 +11,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({TYPE})
 @Retention(RUNTIME)
 public @interface ValidShapeParameters {
-    String message() default "Invalid number of parameters for shape type";
+    String message() default "Invalid shape parameters";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
