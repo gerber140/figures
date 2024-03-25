@@ -12,10 +12,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @DiscriminatorValue("RECTANGLE")
-public class Rectangle extends Shape {
+public class Rectangle extends Shape{
     private double firstSide;
     private double secondSide;
 
+    @Override
     @PrePersist
     @PreUpdate
     public void calculateProperties() {

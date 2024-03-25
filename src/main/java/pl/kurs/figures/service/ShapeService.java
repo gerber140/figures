@@ -2,6 +2,7 @@ package pl.kurs.figures.service;
 
 import com.querydsl.core.BooleanBuilder;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.kurs.figures.criteria.ShapeSearchCriteria;
 import pl.kurs.figures.exceptions.InvalidEntityException;
@@ -23,11 +24,11 @@ public class ShapeService {
         return shapeRepository.save(shape);
     }
 
-    public List<Shape> getShapes(ShapeSearchCriteria criteria) {
-        BooleanBuilder builder = shapePredicate.getShapes(criteria);
+    public List<Shape> getShapes(ShapeSearchCriteria criteria, int page, int size) {
+        BooleanBuilder builder = shapePredicate.buildPredicate(criteria);
         List<Shape> shapeList = new ArrayList<>();
 
-        Iterable<Shape> shapes = shapeRepository.findAll(builder);
+        Iterable<Shape> shapes = shapeRepository.findAll(builder, PageRequest.of(page, size));
         shapes.forEach(shapeList::add);
 
         return shapeList;

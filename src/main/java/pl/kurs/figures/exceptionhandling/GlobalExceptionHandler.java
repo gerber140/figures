@@ -69,7 +69,8 @@ public class GlobalExceptionHandler {
                 .map(ge -> "object: " + ge.getObjectName() + " / message: " + ge.getDefaultMessage())
                 .toList();
 
-        List<String> allErrorMessages = new ArrayList<>(fieldErrorMessages);
+        List<String> allErrorMessages = new ArrayList<>();
+        allErrorMessages.addAll(fieldErrorMessages);
         allErrorMessages.addAll(globalErrorMessages);
 
         ExceptionResponseDTO response = new ExceptionResponseDTO(

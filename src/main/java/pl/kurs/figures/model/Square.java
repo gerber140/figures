@@ -9,9 +9,10 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @DiscriminatorValue("SQUARE")
-public class Square extends Shape {
+public class Square extends Shape{
     private double side;
 
+    @Override
     @PrePersist
     @PreUpdate
     public void calculateProperties() {

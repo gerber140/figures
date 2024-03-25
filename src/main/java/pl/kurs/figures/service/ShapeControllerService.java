@@ -21,8 +21,8 @@ public class ShapeControllerService {
         return shapeMapper.toDto(shape);
     }
 
-    public List<ShapeDTO> getShapes(ShapeSearchCriteria criteria) {
-        List<Shape> shapes = shapeService.getShapes(criteria);
+    public List<ShapeDTO> getShapes(ShapeSearchCriteria criteria, int page, int size) {
+        List<Shape> shapes = shapeService.getShapes(criteria, page, size);
         return shapes.stream()
                 .map(x -> shapeMapper.toDto(x))
                 .toList();

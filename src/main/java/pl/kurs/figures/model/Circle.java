@@ -15,6 +15,7 @@ import lombok.Setter;
 public class Circle extends Shape {
     private double radius;
 
+    @Override
     @PrePersist
     @PreUpdate
     public void calculateProperties() {

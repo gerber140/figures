@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @EntityListeners(AuditingEntityListener.class)
-public class Shape implements Serializable {
+public abstract class Shape implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -54,4 +54,6 @@ public class Shape implements Serializable {
     private double area;
 
     private double perimeter;
+
+    protected abstract void calculateProperties();
 }

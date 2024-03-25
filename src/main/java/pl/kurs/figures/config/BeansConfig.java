@@ -26,18 +26,20 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+@EnableJpaAuditing
 public class BeansConfig {
-    @Bean
-    public ModelMapper getModelMapper() {
-        return new ModelMapper();
-    }
+
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserService userService;
 
     @Bean
+    public ModelMapper getModelMapper() {
+        return new ModelMapper();
+    }
+
+    @Bean
     public AuditorAware<String> auditorAware() {
-        return new SpringSecurityAuditorAware();
+        return new AuditorAwareImpl();
     }
 
     @Bean

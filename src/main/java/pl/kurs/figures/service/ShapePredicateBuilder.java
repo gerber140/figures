@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @Component
 public class ShapePredicateBuilder {
 
-    public BooleanBuilder getShapes(ShapeSearchCriteria criteria) {
+    public BooleanBuilder buildPredicate(ShapeSearchCriteria criteria) {
         BooleanBuilder builder = new BooleanBuilder();
 
         if (criteria.getCreatedBy() != null) {
