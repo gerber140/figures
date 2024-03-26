@@ -1,4 +1,4 @@
-package pl.kurs.figures;
+package pl.kurs.figures.auditing;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.kurs.figures.TestAuditingConfiguration;
 import pl.kurs.figures.model.Shape;
 import pl.kurs.figures.model.Square;
 import pl.kurs.figures.repository.ShapeRepository;

@@ -13,7 +13,6 @@ import pl.kurs.figures.dto.ShapeDTO;
 import pl.kurs.figures.service.ShapeControllerService;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/shapes")
 @AllArgsConstructor

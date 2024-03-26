@@ -5,34 +5,36 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.kurs.figures.criteria.ShapeSearchCriteria;
-import pl.kurs.figures.model.Circle;
-import pl.kurs.figures.model.Rectangle;
-import pl.kurs.figures.model.Shape;
-import pl.kurs.figures.model.Square;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+
 @ExtendWith(MockitoExtension.class)
 class ShapePredicateBuilderTest {
-
+    @Mock
+    private ShapeSearchCriteria criteria;
     @InjectMocks
     private ShapePredicateBuilder shapePredicateBuilder;
 
-    private ShapeSearchCriteria criteria;
 
     @BeforeEach
     void setUp() {
         criteria = new ShapeSearchCriteria();
     }
+    @Test
+    void shouldReturnFalseWhenNoCriteria() {
+        BooleanBuilder builder = shapePredicateBuilder.buildPredicate(criteria);
+
+        assertFalse(builder.hasValue());
+    }
 
     @Test
     void shouldBuildPredicateForCreatedBy() {
-        criteria.setCreatedBy("user");
+        criteria.setCreatedBy("testUser1");
 
         BooleanBuilder builder = shapePredicateBuilder.buildPredicate(criteria);
 
@@ -41,11 +43,11 @@ class ShapePredicateBuilderTest {
     @Test
     void shouldBuildPredicateForSetType() {
         criteria.setType("square");
+        criteria.setSideFrom(10.0);
 
         BooleanBuilder builder = shapePredicateBuilder.buildPredicate(criteria);
 
         assertTrue(builder.hasValue());
     }
-
 
 }
