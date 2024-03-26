@@ -1,4 +1,4 @@
-package pl.kurs.figures;
+package pl.kurs.figures.validations;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
