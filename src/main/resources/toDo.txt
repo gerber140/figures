@@ -22,3 +22,9 @@ generalnie mozeby wyszukiwac po:
 - data stworzenia od, do
 - kto stworzyl,
 - po parametrach figur, od - do
+
+- Figury mogą tworzyc tylko zalogowani uzytkownicy
+- Kazdy uzytkownik ma wtedy liste stworzonych figur a figura ma swojego autora
+- tylko administrator moze pobrac wszystkie figury,
+natomiast zalogowany uzytkownik widzi tylko swoje figury,
+natomiast anonim nie moze pobrac listy figur.

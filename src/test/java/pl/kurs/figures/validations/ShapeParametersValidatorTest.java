@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.kurs.figures.command.CreateShapeCommand;
 import pl.kurs.figures.command.Type;
+import pl.kurs.figures.validations.ShapeParametersValidator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

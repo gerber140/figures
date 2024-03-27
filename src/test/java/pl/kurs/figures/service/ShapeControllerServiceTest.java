@@ -52,11 +52,10 @@ class ShapeControllerServiceTest {
 
         // Then
         assertNotNull(result);
-        assertTrue(result instanceof SquareDTO);
+        assertInstanceOf(SquareDTO.class, result);
         verify(shapeService).addShape(any(Shape.class));
         verify(shapeMapper).toDto(any(Shape.class));
     }
-
 
     @Test
     void shouldGetShapesAndReturnListOfShapeDto() {

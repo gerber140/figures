@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.kurs.figures.security.config.JwtAuthenticationFilter;
+import pl.kurs.figures.security.entity.User;
 import pl.kurs.figures.security.service.UserService;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;

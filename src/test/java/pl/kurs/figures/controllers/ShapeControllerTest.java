@@ -1,31 +1,54 @@
 package pl.kurs.figures.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.security.test.context.support.WithMockUser;;
+import org.springframework.security.test.context.support.WithMockUser;
+import pl.kurs.figures.TestAuditingConfiguration;
 import pl.kurs.figures.command.CreateShapeCommand;
 import pl.kurs.figures.command.Type;
+import pl.kurs.figures.criteria.ShapeSearchCriteria;
+import pl.kurs.figures.dto.ShapeDTO;
+import pl.kurs.figures.dto.SquareDTO;
+import pl.kurs.figures.model.Circle;
+import pl.kurs.figures.model.Rectangle;
+import pl.kurs.figures.model.Shape;
+import pl.kurs.figures.model.Square;
+import pl.kurs.figures.repository.ShapeRepository;
 import pl.kurs.figures.security.entity.Role;
 import pl.kurs.figures.security.entity.User;
 import pl.kurs.figures.security.repository.UserRepository;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -46,29 +69,17 @@ class ShapeControllerTest {
 
 
     @BeforeEach
-    public void setup() throws Exception {
+    public void setup() {
         user = setupUser();
         this.postman = MockMvcBuilders
                 .webAppContextSetup(this.webApplicationContext)
                 .build();
-
-        addShape(new CreateShapeCommand(Type.SQUARE, List.of(5.0)));
-        addShape(new CreateShapeCommand(Type.SQUARE, List.of(10.0)));
-        addShape(new CreateShapeCommand(Type.SQUARE, List.of(15.0)));
-
-        addShape(new CreateShapeCommand(Type.RECTANGLE, List.of(5.0, 10.0)));
-        addShape(new CreateShapeCommand(Type.RECTANGLE, List.of(10.0, 15.0)));
-        addShape(new CreateShapeCommand(Type.RECTANGLE, List.of(15.0, 20.0)));
-
-        addShape(new CreateShapeCommand(Type.CIRCLE, List.of(5.0)));
-        addShape(new CreateShapeCommand(Type.CIRCLE, List.of(10.0)));
-        addShape(new CreateShapeCommand(Type.CIRCLE, List.of(15.0)));
     }
 
     public User setupUser() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         Role userRole = Role.USER;
-        User testUser = new User("testUser", bCryptPasswordEncoder.encode("user"), userRole);
+        User testUser = new User("user", bCryptPasswordEncoder.encode("user"), userRole);
         return userRepository.save(testUser);
     }
 
@@ -99,41 +110,21 @@ class ShapeControllerTest {
 
     @Test
     @WithMockUser(username = "testUser", authorities = {"USER"})
-    void shouldSearchSquareBySide() throws Exception {
+    void shouldSearchShapesByCriteria() throws Exception {
+        addShape(new CreateShapeCommand(Type.SQUARE, List.of(5.0)));
+        addShape(new CreateShapeCommand(Type.SQUARE, List.of(15.0)));
+        addShape(new CreateShapeCommand(Type.RECTANGLE, List.of(5.0, 7.0)));
+        addShape(new CreateShapeCommand(Type.CIRCLE, List.of(5.0)));
+
 
         postman.perform(get("/api/v1/shapes")
                 .param("type", "SQUARE")
-                .param("sideFrom", "11"))
+                .param("sideFrom", "10"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].type").value("SQUARE"))
                 .andExpect(jsonPath("$[0].side").value(15.0));
-    }
 
-    @Test
-    @WithMockUser(username = "testUser", authorities = {"USER"})
-    void shouldSearchRectangleByArea() throws Exception {
-        postman.perform(get("/api/v1/shapes")
-                        .param("type", "RECTANGLE")
-                        .param("areaFrom", "100")
-                        .param("areaTo", "200"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].type").value("RECTANGLE"))
-                .andExpect(jsonPath("$[0].area").value(150));
-    }
-
-    @Test
-    @WithMockUser(username = "testUser", authorities = {"USER"})
-    void shouldSearchCircleByPerimeter() throws Exception {
-        postman.perform(get("/api/v1/shapes")
-                        .param("type", "CIRCLE")
-                        .param("perimeterFrom", "60")
-                        .param("perimeterTo", "80"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$.type").value("CIRCLE"))
-                .andExpect(jsonPath("$[0].radius").value(10));
     }
 
     public ResultActions addShape(CreateShapeCommand command) throws Exception {

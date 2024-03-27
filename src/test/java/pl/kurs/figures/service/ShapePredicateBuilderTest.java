@@ -20,7 +20,6 @@ class ShapePredicateBuilderTest {
     @InjectMocks
     private ShapePredicateBuilder shapePredicateBuilder;
 
-
     @BeforeEach
     void setUp() {
         criteria = new ShapeSearchCriteria();
