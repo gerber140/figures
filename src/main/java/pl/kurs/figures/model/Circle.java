@@ -19,7 +19,7 @@ public class Circle extends Shape {
     @PrePersist
     @PreUpdate
     public void calculateProperties() {
-        this.setArea(Math.PI * radius * radius);
-        this.setPerimeter(2 * Math.PI * radius);
+        this.setPerimeter(Math.PI*radius*2);
+        this.setArea(Math.PI*radius*radius);
     }
 }

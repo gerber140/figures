@@ -1,17 +1,20 @@
-package pl.kurs.figures.security.dao.request;
+package pl.kurs.figures.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.kurs.figures.security.entity.Role;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpRequest {
+public class UserDTO {
+    private Integer id;
     private String firstname;
     private String lastname;
     private String username;
-    private String password;
+    private Role role;
+    private int amountOfCreatedShapes;
 }

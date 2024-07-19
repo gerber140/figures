@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import pl.kurs.figures.model.Shape;
 import pl.kurs.figures.security.entity.Role;
 
@@ -23,6 +24,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String firstname;
+
+    private String lastname;
+
     @Column(unique = true)
     private String username;
 
@@ -30,6 +35,9 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Shape> createdShapes;
 
     public User(String username, String password, Role role) {
         this.username = username;

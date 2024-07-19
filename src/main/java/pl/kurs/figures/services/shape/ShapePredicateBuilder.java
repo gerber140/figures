@@ -1,9 +1,11 @@
-package pl.kurs.figures.service;
+package pl.kurs.figures.services.shape;
 
 import com.querydsl.core.BooleanBuilder;
 import org.springframework.stereotype.Component;
+import pl.kurs.figures.command.Type;
 import pl.kurs.figures.criteria.ShapeSearchCriteria;
 import pl.kurs.figures.model.*;
+
 import java.time.LocalTime;
 
 
@@ -26,7 +28,7 @@ public class ShapePredicateBuilder {
                     builder.and(QShape.shape.as(QSquare.class).side.loe(criteria.getSideTo()));
                 }
             }
-            if ("CIRCLE".equalsIgnoreCase(criteria.getType())) {
+            if ("CIRCLE".equals(criteria.getType())) {
                 if (criteria.getRadiusFrom() != null) {
                     builder.and(QShape.shape.as(QCircle.class).radius.goe(criteria.getRadiusFrom()));
                 }
@@ -34,7 +36,7 @@ public class ShapePredicateBuilder {
                     builder.and(QShape.shape.as(QCircle.class).radius.loe(criteria.getRadiusTo()));
                 }
             }
-            if ("RECTANGLE".equalsIgnoreCase(criteria.getType())) {
+            if ("RECTANGLE".equals(criteria.getType())) {
                 if (criteria.getFirstSideFrom() != null) {
                     builder.and(QShape.shape.as(QRectangle.class).firstSide.goe(criteria.getFirstSideFrom()));
                 }
@@ -66,6 +68,12 @@ public class ShapePredicateBuilder {
         }
         if (criteria.getCreatedAtTo() != null) {
             builder.and(QShape.shape.createdAt.loe(criteria.getCreatedAtTo().atTime(LocalTime.MAX)));
+        }
+        if (criteria.getVersionFrom() != null) {
+            builder.and(QShape.shape.version.goe(criteria.getVersionFrom()));
+        }
+        if (criteria.getVersionTo() != null) {
+            builder.and(QShape.shape.version.loe(criteria.getVersionTo()));
         }
 
         return builder;

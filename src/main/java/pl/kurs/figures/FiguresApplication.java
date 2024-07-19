@@ -11,8 +11,9 @@ import pl.kurs.figures.security.entity.User;
 import pl.kurs.figures.security.repository.UserRepository;
 
 @SpringBootApplication
-public class FiguresApplication {
-
+public class FiguresApplication
+{
+//
 //		implements CommandLineRunner {
 //    @Autowired
 //    private UserRepository userRepository;
@@ -30,6 +31,8 @@ public class FiguresApplication {
 //    private void createAdminIfNotExists() {
 //        if (!userRepository.existsByUsername("admin")) {
 //            User admin = User.builder()
+//					.firstname("Admin")
+//					.lastname("Adminowski")
 //                    .username("admin")
 //                    .password(passwordEncoder.encode("admin"))
 //                    .role(Role.ADMIN)

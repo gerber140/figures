@@ -50,7 +50,7 @@ public class AuthenticationControllerTest {
 
     @Test
     public void signupTest() throws Exception {
-        SignUpRequest signUpRequest = new SignUpRequest("user", "user");
+        SignUpRequest signUpRequest = new SignUpRequest("firstname", "lastname","user", "user");
 
         postman.perform(post("/api/auth/signup")
                         .contentType(MediaType.APPLICATION_JSON)

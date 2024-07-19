@@ -66,7 +66,7 @@ class ShapeControllerTest {
 
     @BeforeEach
     public void setup() {
-        user = setupUser("user", Role.USER);
+        user = setupUser("user", Role.CREATOR);
         this.postman = MockMvcBuilders
                 .webAppContextSetup(this.webApplicationContext)
                 .build();

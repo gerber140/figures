@@ -16,7 +16,8 @@ public class Square extends Shape{
     @PrePersist
     @PreUpdate
     public void calculateProperties() {
-        this.setArea(side * side);
-        this.setPerimeter(side * 4);
+        this.setPerimeter(side*4);
+        this.setArea(side*side);
     }
+
 }

@@ -2,9 +2,6 @@ package pl.kurs.figures.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -13,27 +10,26 @@ import pl.kurs.figures.command.Type;
 import pl.kurs.figures.criteria.ShapeSearchCriteria;
 import pl.kurs.figures.dto.ShapeDTO;
 import pl.kurs.figures.dto.SquareDTO;
-import pl.kurs.figures.model.Circle;
-import pl.kurs.figures.model.Rectangle;
 import pl.kurs.figures.model.Shape;
 import pl.kurs.figures.model.Square;
+import pl.kurs.figures.services.shape.ShapeControllerService;
+import pl.kurs.figures.services.shape.ShapeMapper;
+import pl.kurs.figures.services.shape.ShapeService;
 
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static pl.kurs.figures.service.ShapeFactory.createShape;
 
 @ExtendWith(MockitoExtension.class)
 class ShapeControllerServiceTest {
     @Mock
     private ShapeService shapeService;
     @Mock
-    private ShapeDTOMapper shapeMapper;
+    private ShapeMapper shapeMapper;
     @InjectMocks
     private ShapeControllerService shapeControllerService;
 
@@ -44,7 +40,7 @@ class ShapeControllerServiceTest {
         Shape shape = new Square(5);
         SquareDTO squareDTO = new SquareDTO();
 
-        when(shapeService.addShape(any(Shape.class))).thenReturn(shape);
+        when(shapeService.addShape(any(CreateShapeCommand.class))).thenReturn(shape);
         when(shapeMapper.toDto(any(Shape.class))).thenReturn(squareDTO);
 
         // When
@@ -53,7 +49,7 @@ class ShapeControllerServiceTest {
         // Then
         assertNotNull(result);
         assertInstanceOf(SquareDTO.class, result);
-        verify(shapeService).addShape(any(Shape.class));
+        verify(shapeService).addShape(any(CreateShapeCommand.class));
         verify(shapeMapper).toDto(any(Shape.class));
     }
 

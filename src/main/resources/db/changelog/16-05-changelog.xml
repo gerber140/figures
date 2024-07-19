@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet  id="1"  author="generated">
+
+        <createTable tableName="_user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="firstname" type="VARCHAR(255)"/>
+            <column name="lastname" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="role" type="VARCHAR(255)"/>
+        </createTable>
+
+        <createIndex tableName="_user" indexName="idx_user_username" unique="true">
+            <column name="username"/>
+        </createIndex>
+
+
+        <createTable  tableName="shapes">
+            <column  name="id"  type="BIGINT"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(31)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="INTEGER"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="last_modified_at" type="TIMESTAMP"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="area" type="DOUBLE"/>
+            <column name="perimeter" type="DOUBLE"/>
+            <column name="side" type="DOUBLE"/>
+            <column name="radius" type="DOUBLE"/>
+            <column name="first_side" type="DOUBLE"/>
+            <column name="second_side" type="DOUBLE"/>
+        </createTable>
+
+        <createIndex tableName="shapes" indexName="idx_shapes_type">
+            <column name="type"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseTableName="shapes"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_shapes_user"
+                                 referencedTableName="_user"
+                                 referencedColumnNames="id"/>
+
+
+
+        <createTable tableName="shape_change">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="change_time" type="TIMESTAMP"/>
+            <column name="shape_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changed_field" type="VARCHAR(255)"/>
+            <column name="old_value" type="DOUBLE"/>
+            <column name="new_value" type="DOUBLE"/>
+            <column name="modified_by" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="shape_change"
+                                 baseColumnNames="shape_id"
+                                 constraintName="fk_shapechange_shape"
+                                 referencedTableName="shapes"
+                                 referencedColumnNames="id"/>
+
+
+    </changeSet>
+</databaseChangeLog>

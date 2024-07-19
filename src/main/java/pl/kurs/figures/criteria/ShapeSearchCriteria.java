@@ -22,6 +22,9 @@ public class ShapeSearchCriteria {
     private Double perimeterFrom;
     private Double perimeterTo;
 
+    private Integer versionFrom;
+    private Integer versionTo;
+
     private LocalDate createdAtFrom;
     private LocalDate createdAtTo;
 

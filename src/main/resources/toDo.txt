@@ -28,3 +28,26 @@ generalnie mozeby wyszukiwac po:
 - tylko administrator moze pobrac wszystkie figury,
 natomiast zalogowany uzytkownik widzi tylko swoje figury,
 natomiast anonim nie moze pobrac listy figur.
+
+
+
+
+
+dorób api do edycji figury
+
+@PUT /api/v1/shapes/{id}
+- moze zwracac 404 jesli id figury nie istnieje
+- powinien byc dostepny dla uzytkownika z rola 'ADMIN' lub dla osoby ktora ta figure stworzyła
+- kazda edycja danych figury powinna zapisywac informacje o tym zdarzeniu,
+czyli: data i czas zmiany, id zmienionej figury, jakie pole zostało zmienione
+stara wartosc i nowa wartosc oraz autor zmiany (admin czy creator, bo tylko takie osoby mogą edytowac figury)
+
+dorob api do pobierania zmian figury:
+@GET /api/v1/shapes/{id}/changes
+- zwraca zmiany danej figury,
+endpoint dostepny dla admina i osoby co stworzyla dana figure
+
+dorob api do dodawania uzytkownikow systemu:
+
+@POST /api/v1/users
+- kazdy uzytkownik posiada: imie, nazwisko,...

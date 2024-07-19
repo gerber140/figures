@@ -1,7 +1,7 @@
 package pl.kurs.figures.security.entity;
 
 public enum Role {
-    USER("user"),
+    CREATOR("user"),
     ADMIN("admin");
 
     public final String label;
